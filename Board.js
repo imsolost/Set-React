@@ -14,22 +14,13 @@ export default class Board extends Component {
   render() {
     return (
       <View style={boardStyles.board}>
+
         <View style={boardStyles.scoreBoard}>
           <Text>SCORE</Text>
         </View>
 
         <View style={boardStyles.gridBox}>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-          <View style={boardStyles.card}><Text>CARD</Text></View>
+
           <View style={boardStyles.card}><Text>CARD</Text></View>
         </View>
 
