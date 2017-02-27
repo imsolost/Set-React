@@ -11,21 +11,15 @@ import {
   Text,
   View
 } from 'react-native';
+import Board from './Board'
 
 export default class SetReact extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React NativeShutff
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+
+        <Board className="board"/>
+
       </View>
     );
   }
@@ -36,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#5f9ea0',
   },
   welcome: {
     fontSize: 20,
@@ -48,6 +42,10 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  board: {
+    color: 'red'
+  }
+
 });
 
 AppRegistry.registerComponent('SetReact', () => SetReact);
