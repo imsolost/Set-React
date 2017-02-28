@@ -4,12 +4,22 @@ import {
   StyleSheet,
   Text,
   View
-} from 'react-native';
+} from 'react-native'
 import Dimensions from 'Dimensions'
+import Game from './classes/Game'
+import Grid from './components/Grid'
 
+const game = new Game()
+game.deal()
 const { width, height } = Dimensions.get('window')
 
 export default class Board extends Component {
+  constructor( props ) {
+    super( props )
+    this.state = {
+      game: game
+    }
+  }
 
   render() {
     return (
@@ -19,10 +29,7 @@ export default class Board extends Component {
           <Text>SCORE</Text>
         </View>
 
-        <View style={boardStyles.gridBox}>
-
-          <View style={boardStyles.card}><Text>CARD</Text></View>
-        </View>
+        <Grid grid={this.state.game.grid}/>
 
         <View style={boardStyles.buttons}>
           <Text>BUTTONS</Text>
