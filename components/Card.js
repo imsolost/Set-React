@@ -12,26 +12,18 @@ import {
 
 
 export default class Card extends Component {
-  constructor( props ) {
-    super( props )
-      this.state = {
-        image: props.card.image,
-        number: props.card.number,
-        shape: props.card.shape,
-        color: props.card.color,
-        shading: props.card.shading
-      }
-  }
-
   onPressButton() {
-    this.props.onTouch(this.state)
+    this.props.onTouch(this.props)
   }
 
 
   render() {
+    let image = this.props.card !== null
+      ? <Image source={this.props.card.image} style={cardStyles.img}/>
+      : <Text> NULL </Text>
     return (
       <TouchableHighlight style={cardStyles.card} onPress={this.onPressButton.bind( this )}>
-        <Image source={this.state.image} style={cardStyles.img}/>
+        { image }
       </TouchableHighlight>
     )
   }

@@ -4,6 +4,7 @@ import _ from 'lodash'
 export default class Game {
   constructor() {
     this.setNewGame()
+    this.deal = this.deal.bind( this )
   }
 
   deal() {
@@ -11,8 +12,22 @@ export default class Game {
   }
 
 
-  checkForSet() {
+  checkForSet( setArray ) {
+    if ( setArray ) {
+      return 
+    }
+    const keys = Object.keys( setArray[0] )
+    delete keys['image']
 
+    const result = keys.reduce( ( acc, key ) => {
+      acc[key] = Game.compareSet( setArray, key )
+      return acc
+    }, {} )
+
+    if ( Object.values( result ).includes( false ) ) {
+      return false
+    }
+    return true
   }
 
   setNewGame() {
@@ -21,6 +36,24 @@ export default class Game {
     this.deck.cards = _.shuffle( this.deck.cards )
     this.grid = new Grid()
   }
+
+
+  static isSame = function( setArray, property ) {
+    return (setArray[0][property] === setArray[1][property])
+      && ( setArray[1][property] === setArray[2][property] )
+  }
+  static areAllDifferent = function( setArray, property ) {
+    return (setArray[0][property] !== setArray[1][property])
+      && ( setArray[1][property] !== setArray[2][property] )
+      && ( setArray[0][property] !== setArray[2][property] )
+  }
+  static compareSet = function( setArray, key ) {
+   if ( Game.isSame( setArray, key ) || Game.areAllDifferent( setArray, key ) ) {
+       return true
+     }
+     return false
+  }
+
 }
 
 // const game = new Game()

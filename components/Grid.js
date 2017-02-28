@@ -11,15 +11,8 @@ import Card from './Card'
 const { width, height } = Dimensions.get('window')
 
 export default class Grid extends Component {
-  constructor(props){
-  	super(props);
-  	this.state = {
-      cardsInPlay: props.grid.cardsInPlay
-    }
-  }
-
     render() {
-      const cards = this.state.cardsInPlay
+      const cards = this.props.grid.cardsInPlay
         .map( (card, key) => <Card key={key} card={card} onTouch={this.props.touchCard} /> )
       return (
         <View style={gridStyle.gridBox}>

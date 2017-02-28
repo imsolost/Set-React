@@ -8,6 +8,7 @@ import {
 import Dimensions from 'Dimensions'
 import Game from './classes/Game'
 import Grid from './components/Grid'
+import _ from 'lodash'
 
 const game = new Game()
 game.deal()
@@ -23,17 +24,36 @@ export default class Board extends Component {
   }
 
   touchCard( card ) {
-    let newState = this.state.game
-    let newSet = newState.player.addCard( card )
-    if ( newSet ) {
-      console.log('We has a set! ', newSet)
-      newState.player.clearSet()
+    let game = this.state.game
+    game.player.addCard( card )
+
+    if ( game.player.selectedCards.length === 3 ) {
+
+      let newCardsInPlay = game.grid.cardsInPlay
+      let selectedCards = game.player.selectedCards
+
+      if ( game.checkForSet(selectedCards) ) {
+        game.player.score += 1
+        for (let i = 0; i < newCardsInPlay.length; i++) {
+          for (let j = 0; j < 3; j++) {
+            if ( _.isEqual(newCardsInPlay[i].card, selectedCards[j].card) ) {
+              console.log( 'FOUND ZE EQUAL' )
+              newCardsInPlay[i] = null
+            }
+          }
+        }
+        game.grid.cardsInPlay = newCardsInPlay
+      }
+
+      //console.log( game )
+      game.player.clearSet()
     }
-    this.setState({ game: newState })
-    console.log( 'In player array thingy',  this.state.game.player.selectedCards )
+    this.setState({ game })
   }
 
+
   render() {
+    let game = this.state.game
     return (
       <View style={boardStyles.board}>
 
@@ -41,7 +61,7 @@ export default class Board extends Component {
           <Text>SCORE</Text>
         </View>
 
-        <Grid grid={this.state.game.grid} touchCard={this.touchCard}/>
+        <Grid grid={game.grid} touchCard={this.touchCard} />
 
         <View style={boardStyles.buttons}>
           <Text>BUTTONS</Text>
