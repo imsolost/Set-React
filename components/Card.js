@@ -8,21 +8,23 @@ import {
 } from 'react-native'
 
 
+
+
 export default class Card extends Component {
   constructor( props ) {
     super( props )
       this.state = {
-        image: props.imageSrc
+        image: props.card.image,
+        number: props.card.number
       }
   }
-  // const img = '../Public/cards/1.gif'
+
 
   render() {
-    // console.log( this.state.image )
-    // const path = this.state.image
+    //const filePath = require("./cards/1.gif")
     return (
       <View>
-        <Image source={ './cards/1.gif' } />
+        <Image source={this.state.image} />
       </View>
     )
   }

@@ -17,7 +17,7 @@ export default class Grid extends Component {
 
     render() {
       const cards = this.state.cardsInPlay
-        .map( (card, key) => <Card key={key} imageSrc={card.image} /> )
+        .map( (card, key) => <Card key={key} card={card} /> )
       return (
         <View>
           {cards}
