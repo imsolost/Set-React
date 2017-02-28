@@ -23,6 +23,6 @@ export default class Game {
   }
 }
 
-const game = new Game()
-game.deal()
-console.log( game.grid )
+// const game = new Game()
+// game.deal()
+// console.log( game.grid )

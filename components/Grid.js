@@ -20,7 +20,7 @@ export default class Grid extends Component {
 
     render() {
       const cards = this.state.cardsInPlay
-        .map( (card, key) => <Card key={key} card={card} /> )
+        .map( (card, key) => <Card key={key} card={card} onTouch={this.props.touchCard} /> )
       return (
         <View style={gridStyle.gridBox}>
           {cards}

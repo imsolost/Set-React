@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Image,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native'
 
 
@@ -22,12 +23,16 @@ export default class Card extends Component {
       }
   }
 
+  onPressButton() {
+    this.props.onTouch(this.state)
+  }
+
 
   render() {
     return (
-      <View style={cardStyles.card}>
+      <TouchableHighlight style={cardStyles.card} onPress={this.onPressButton.bind( this )}>
         <Image source={this.state.image} style={cardStyles.img}/>
-      </View>
+      </TouchableHighlight>
     )
   }
 }
@@ -40,8 +45,6 @@ const cardStyles = StyleSheet.create({
   },
   img: {
     flex: 1,
-    // height: 75,
-    // width: 105,
     resizeMode: 'contain',
     transform: [ {rotate: '90deg'} ]
   }//0,

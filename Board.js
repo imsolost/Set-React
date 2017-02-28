@@ -19,6 +19,18 @@ export default class Board extends Component {
     this.state = {
       game: game
     }
+    this.touchCard = this.touchCard.bind( this )
+  }
+
+  touchCard( card ) {
+    let newState = this.state.game
+    let newSet = newState.player.addCard( card )
+    if ( newSet ) {
+      console.log('We has a set! ', newSet)
+      newState.player.clearSet()
+    }
+    this.setState({ game: newState })
+    console.log( 'In player array thingy',  this.state.game.player.selectedCards )
   }
 
   render() {
@@ -29,7 +41,7 @@ export default class Board extends Component {
           <Text>SCORE</Text>
         </View>
 
-        <Grid grid={this.state.game.grid}/>
+        <Grid grid={this.state.game.grid} touchCard={this.touchCard}/>
 
         <View style={boardStyles.buttons}>
           <Text>BUTTONS</Text>
