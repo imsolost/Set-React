@@ -47,18 +47,7 @@ const boardStyles = StyleSheet.create({
     height: height*.85,
     width: width*.85,
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  gridBox: {
-    borderWidth: 1,
-    borderColor: 'blue',
-    height: height*.7,
-    width: width*.85,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexWrap: 'wrap'
+    justifyContent: 'space-between'
   },
   scoreBoard: {
     width: width*.75,
@@ -70,11 +59,5 @@ const boardStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'green',
     height: 50
-  },
-  card: {
-    width: width*.27,
-    height: height*.17,
-    borderWidth: 1,
-    marginBottom: 3
   }
 })
