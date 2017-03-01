@@ -1,3 +1,4 @@
+import _ from 'lodash'
 
 export default class Player {
   constructor( name ) {
@@ -8,11 +9,33 @@ export default class Player {
   }
 
   addCard( card ) {
-    if ( this.selectedCards.length === 2 ) {
-      this.selectedCards.push( card )
-      return this.selectedCards
-    }
     this.selectedCards.push( card )
+  }
+
+  removeCard( card ) {
+    let newSelection = this.selectedCards.filter( selectedCard => {
+      return !( Player.cardsAreEqual(selectedCard.card, card.card) )
+    })
+    this.selectedCards = newSelection
+
+  }
+
+  checkIfCardIsSelected( card ) {
+    let currentSelection = this.selectedCards
+    return currentSelection.reduce( ( acc, currentCard ) => {
+      if ( Player.cardsAreEqual( currentCard.card, card.card ) ) {
+        return acc = true
+      }
+      return acc
+    }, false )
+  }
+
+  static cardsAreEqual( card1, card2 ) {
+    return _.isEqual( card1, card2 )
+  }
+
+  selectionIsEmpty() {
+    return this.selectedCards.length === 0
   }
 
   clearSet() {

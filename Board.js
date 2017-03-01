@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { AppRegistry, StyleSheet, Text, View } from 'react-native'
 import Dimensions from 'Dimensions'
 import Game from './classes/Game'
 import Grid from './components/Grid'
+
 import _ from 'lodash'
 
 const game = new Game()
@@ -25,31 +21,27 @@ export default class Board extends Component {
 
   touchCard( card ) {
     let game = this.state.game
-    game.player.addCard( card )
+    let currentSelection = game.player.selectedCards
 
-    if ( game.player.selectedCards.length === 3 ) {
+    if ( game.player.selectionIsEmpty() ) {
+      game.player.addCard( card )
+      return
+    }
 
-      let newCardsInPlay = game.grid.cardsInPlay
-      let selectedCards = game.player.selectedCards
+    if ( game.player.checkIfCardIsSelected( card ) ) {
+      game.player.removeCard( card )
+    } else {
+      game.player.addCard( card )
+    }
 
-      if ( game.checkForSet(selectedCards) ) {
-        game.player.score += 1
-        for (let i = 0; i < newCardsInPlay.length; i++) {
-          for (let j = 0; j < 3; j++) {
-            if ( _.isEqual(newCardsInPlay[i].card, selectedCards[j].card) ) {
-              console.log( 'FOUND ZE EQUAL' )
-              newCardsInPlay[i] = null
-            }
-          }
-        }
-        game.grid.cardsInPlay = newCardsInPlay
-      }
-
-      //console.log( game )
+    if ( currentSelection.length === 3 ) {
+      game.handleSet()
       game.player.clearSet()
     }
+
     this.setState({ game })
   }
+
 
 
   render() {

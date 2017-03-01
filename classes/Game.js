@@ -7,29 +7,6 @@ export default class Game {
     this.deal = this.deal.bind( this )
   }
 
-  deal() {
-  this.grid.fillNulls( this.deck )
-  }
-
-
-  checkForSet( setArray ) {
-    if ( setArray ) {
-      return 
-    }
-    const keys = Object.keys( setArray[0] )
-    delete keys['image']
-
-    const result = keys.reduce( ( acc, key ) => {
-      acc[key] = Game.compareSet( setArray, key )
-      return acc
-    }, {} )
-
-    if ( Object.values( result ).includes( false ) ) {
-      return false
-    }
-    return true
-  }
-
   setNewGame() {
     this.player = new Player()
     this.deck = new Deck()
@@ -37,25 +14,74 @@ export default class Game {
     this.grid = new Grid()
   }
 
+  deal() {
+  this.grid.fillNulls( this.deck )
+  }
 
-  static isSame = function( setArray, property ) {
+  handleSet() {
+    let cardsInPlay = this.grid.cardsInPlay
+    let selectedCards = this.player.selectedCards
+
+    console.log( 'selectedCards --->', selectedCards )
+
+    console.log( 'IS a VALID set? ', Game.isAValidSet( selectedCards ) )
+    if ( Game.isAValidSet( selectedCards ) === true ){
+      console.log( 'Is VALID --->', selectedCards )
+
+      this.player.score++
+
+      for (let i = 0; i < Game.CARDS_IN_PLAY_LENGTH; i++) {
+        for (let j = 0; j < Game.MAX_SET_LENGTH; j++) {
+          if ( _.isEqual(cardsInPlay[i].card, selectedCards[j].card) ) {
+            cardsInPlay[i] = null
+          }
+        }
+      }
+      this.grid.cardsInPlay = cardsInPlay
+    }
+  }
+
+
+
+  static CARDS_IN_PLAY_LENGTH = 12
+  static MAX_SET_LENGTH = 3
+
+  static isAValidSet( setArray ) {
+    let properties = Object.keys( setArray[0].card )
+      .filter( property => property !== 'image' )
+
+    let result = properties.reduce( ( acc, property ) => {
+      acc.push( Game.compareSetProperty( setArray, property ) )
+      return acc
+    }, [] )
+
+    console.log( 'results    ', result )
+
+    if ( result.includes( false ) ) {
+      return false
+    }
+    return true
+  }
+
+  static areAllSame( setArray, property ) {
     return (setArray[0][property] === setArray[1][property])
       && ( setArray[1][property] === setArray[2][property] )
   }
-  static areAllDifferent = function( setArray, property ) {
+
+  static areAllDifferent( setArray, property ) {
     return (setArray[0][property] !== setArray[1][property])
       && ( setArray[1][property] !== setArray[2][property] )
       && ( setArray[0][property] !== setArray[2][property] )
   }
-  static compareSet = function( setArray, key ) {
-   if ( Game.isSame( setArray, key ) || Game.areAllDifferent( setArray, key ) ) {
-       return true
-     }
-     return false
+
+  static compareSetProperty( setArray, property ) {
+    console.log( property )
+    if ( Game.areAllSame( setArray, property ) ){
+      return true
+    }
+    if( Game.areAllDifferent( setArray, property ) ) {
+      return true
+    }
   }
 
 }
-
-// const game = new Game()
-// game.deal()
-// console.log( game.grid )
