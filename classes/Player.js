@@ -13,11 +13,9 @@ export default class Player {
   }
 
   removeCard( card ) {
-    console.log( 'REMOVING' )
     let newSelection = this.selectedCards.filter( selectedCard => {
       return !( Player.cardsAreEqual(selectedCard, card) )
     })
-    console.log( newSelection )
     this.selectedCards = newSelection
 
   }

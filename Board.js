@@ -27,19 +27,25 @@ export default class Board extends Component {
 
     if ( game.player.selectionIsEmpty() ) {
       game.player.addCard( card )
+      game.grid.toggleSelectOnCard( card )
+      this.setState({ game })
       return
     }
 
+
     if ( game.player.checkIfCardIsSelected( card ) ) {
       game.player.removeCard( card )
+      game.grid.toggleSelectOnCard( card )
     } else {
       game.player.addCard( card )
+      game.grid.toggleSelectOnCard( card )
     }
 
     if ( currentSelection.length === 3 ) {
       game.handleSet()
       game.player.clearSet()
       game.deal()
+      game.grid.resetSelected()
     }
 
     this.setState({ game })
@@ -50,6 +56,19 @@ export default class Board extends Component {
     game.setNewGame()
     game.deal()
     this.setState({ game })
+  }
+
+  cardStyleFunc( color ) {
+    return {
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 110,
+      width: 90,
+      margin: 3,
+      borderWidth: 1,
+      shadowColor: color,
+      shadowOpacity: 1
+    }
   }
 
 
@@ -63,7 +82,7 @@ export default class Board extends Component {
           <ScoreCard score={game.player.score}/>
         </View>
 
-        <Grid grid={game.grid} touchCard={this.touchCard} />
+        <Grid grid={game.grid} touchCard={this.touchCard} cardStyle={this.cardStyleFunc} />
 
         <View style={boardStyles.buttonRack}>
           <Button onPress={this.startNewGame} title="New Game" color="#841584"/>
@@ -82,7 +101,6 @@ const boardStyles = StyleSheet.create({
     width: width*.85,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    // flex: 1
   },
   scoreBoard: {
     width: width*.85,
