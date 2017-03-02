@@ -22,17 +22,12 @@ export default class Game {
     let cardsInPlay = this.grid.cardsInPlay
     let selectedCards = this.player.selectedCards
 
-    console.log( 'selectedCards --->', selectedCards )
-
-    console.log( 'IS a VALID set? ', Game.isAValidSet( selectedCards ) )
     if ( Game.isAValidSet( selectedCards ) === true ){
-      console.log( 'Is VALID --->', selectedCards )
-
-      this.player.score++
-
+      this.player.addScorePoint()
+      
       for (let i = 0; i < Game.CARDS_IN_PLAY_LENGTH; i++) {
         for (let j = 0; j < Game.MAX_SET_LENGTH; j++) {
-          if ( _.isEqual(cardsInPlay[i].card, selectedCards[j].card) ) {
+          if ( _.isEqual(cardsInPlay[i], selectedCards[j]) ) {
             cardsInPlay[i] = null
           }
         }
@@ -47,41 +42,34 @@ export default class Game {
   static MAX_SET_LENGTH = 3
 
   static isAValidSet( setArray ) {
-    let properties = Object.keys( setArray[0].card )
+    let properties = Object.keys( setArray[0] )
       .filter( property => property !== 'image' )
 
     let result = properties.reduce( ( acc, property ) => {
-      acc.push( Game.compareSetProperty( setArray, property ) )
+    acc[property] = Game.compareSetProperty( setArray, property )
       return acc
-    }, [] )
+    }, {} )
 
-    console.log( 'results    ', result )
-
-    if ( result.includes( false ) ) {
+    if ( Object.values( result ).includes( false ) ) {
       return false
     }
     return true
   }
 
-  static areAllSame( setArray, property ) {
-    return (setArray[0][property] === setArray[1][property])
+  static allAreSame( setArray, property ) {
+    return ( setArray[0][property] === setArray[1][property])
       && ( setArray[1][property] === setArray[2][property] )
   }
 
-  static areAllDifferent( setArray, property ) {
+  static allAreDifferent( setArray, property ) {
     return (setArray[0][property] !== setArray[1][property])
-      && ( setArray[1][property] !== setArray[2][property] )
       && ( setArray[0][property] !== setArray[2][property] )
+      && ( setArray[1][property] !== setArray[2][property] )
   }
 
   static compareSetProperty( setArray, property ) {
-    console.log( property )
-    if ( Game.areAllSame( setArray, property ) ){
-      return true
-    }
-    if( Game.areAllDifferent( setArray, property ) ) {
-      return true
-    }
+    return Game.allAreSame( setArray, property )
+      || Game.allAreDifferent( setArray, property )
   }
 
 }
