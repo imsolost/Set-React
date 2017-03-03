@@ -24,7 +24,7 @@ export default class Game {
 
     if ( Game.isAValidSet( selectedCards ) === true ){
       this.player.addScorePoint()
-      
+
       for (let i = 0; i < Game.CARDS_IN_PLAY_LENGTH; i++) {
         for (let j = 0; j < Game.MAX_SET_LENGTH; j++) {
           if ( _.isEqual(cardsInPlay[i], selectedCards[j]) ) {
@@ -34,6 +34,23 @@ export default class Game {
       }
       this.grid.cardsInPlay = cardsInPlay
     }
+  }
+
+  reDeal() {
+    let deck = this.deck
+    let grid = this.grid
+
+    grid.cardsInPlay.forEach( cardInPlay => {
+      if ( cardInPlay.number === null ) {
+        return
+      }
+      deck.cards.push( cardInPlay )
+    })
+    this.grid.clear()
+    deck.cards = _.shuffle( deck.cards )
+    this.deck = deck
+    this.grid = grid
+    this.deal()
   }
 
 

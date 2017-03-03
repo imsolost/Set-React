@@ -29,9 +29,23 @@ export default class Grid {
     this.cardsInPlay = cardsInPlay
   }
 
+  clear() {
+    let cardsInPlay = this.cardsInPlay.map( cardInPlay => {
+      if ( cardInPlay.number === null ) {
+        return cardInPlay
+      }
+      return null
+    })
+    this.cardsInPlay = cardsInPlay
+
+  }
+
   fillNulls( deck ) {
     const cardsInPlay = this.cardsInPlay.map( card =>  {
       if ( card === null ) {
+        if ( deck.cards.length < 1 ) {
+          return deck.nullCard
+        }
         return deck.cards.pop()
       }
       return card

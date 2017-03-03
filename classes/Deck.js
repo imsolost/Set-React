@@ -655,6 +655,14 @@ export default class Deck {
         selected: false
       }
     ]
+    this.nullCard = {
+      image: require("../components/cards/poke.gif"),
+      number: null,
+      color: "Red",
+      shape: "Squiggle",
+      shading: "Solid",
+      selected: false
+    }
   }
 
 }
