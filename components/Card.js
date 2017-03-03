@@ -70,10 +70,10 @@ const cardStyles = StyleSheet.create({
   overlay: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ffffff',
+    // borderColor: '#ffffff',
     borderRadius: 5,
     width: 75,
     alignItems: 'center',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   }
 })

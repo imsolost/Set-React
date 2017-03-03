@@ -29,7 +29,7 @@ const gridStyle = StyleSheet.create({
     height: height*.7,
     width: width*.85,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     flexWrap: 'wrap',
     flex: 1,
     backgroundColor: 'rgba( 0,0,0,0)'

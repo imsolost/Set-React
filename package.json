@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "run-ios": "react-native run-ios"
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "lodash": "^4.17.4",

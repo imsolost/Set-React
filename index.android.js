@@ -9,8 +9,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
-  Image
+  View
 } from 'react-native';
 import Board from './Board'
 
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'grey',
   },
 });
 

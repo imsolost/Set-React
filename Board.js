@@ -56,16 +56,21 @@ export default class Board extends Component {
     this.setState({ game })
   }
 
+  handleReDeal() {
+    let game = this.state.game
+    game.reDeal()
+    this.setState({ game })
+  }
+
   cardStyleFunc( color ) {
     return {
       justifyContent: 'center',
       alignItems: 'center',
       height: 110,
-      width: 90,
-      margin: 3,
-      borderWidth: 1,
-      shadowColor: color,
-      shadowOpacity: 1
+      width: 75,
+      margin: 1,
+      borderWidth: 2,
+      borderColor: color,
     }
   }
 
@@ -84,6 +89,7 @@ export default class Board extends Component {
 
         <View style={boardStyles.buttonRack}>
           <Button onPress={this.startNewGame} title="New Game" color="#841584"/>
+          <Button onPress={this.handleReDeal.bind( this )} title="redeal" color="#841584"/>
         </View>
       </View>
     )
@@ -94,18 +100,17 @@ export default class Board extends Component {
 
 const boardStyles = StyleSheet.create({
   board: {
-    backgroundColor: 'white',
-    height: height*.85,
+    height: height*.90,
     width: width*.85,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
   scoreBoard: {
     width: width*.85,
-    height: 50,
-    borderWidth: 1
+    height: 25,
   },
   buttonRack: {
-    height: 50
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 })
