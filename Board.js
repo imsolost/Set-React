@@ -4,6 +4,7 @@ import Dimensions from 'Dimensions'
 import Game from './classes/Game'
 import Grid from './components/Grid'
 import ScoreCard from './components/ScoreCard'
+import Timer from './components/Timer'
 
 const game = new Game()
 game.deal()
@@ -13,10 +14,13 @@ export default class Board extends Component {
   constructor( props ) {
     super( props )
     this.state = {
-      game: game
+      game: game,
+      time: 10
     }
     this.touchCard = this.touchCard.bind( this )
     this.startNewGame = this.startNewGame.bind( this )
+    this.countDown = this.countDown.bind( this )
+    //this.countDown()
   }
 
   touchCard( card ) {
@@ -29,7 +33,6 @@ export default class Board extends Component {
       this.setState({ game })
       return
     }
-
 
     if ( game.player.checkIfCardIsSelected( card ) ) {
       game.player.removeCard( card )
@@ -66,14 +69,25 @@ export default class Board extends Component {
     return {
       justifyContent: 'center',
       alignItems: 'center',
-      height: 110,
-      width: 75,
+      height: height * .175, // 110,
+      width: width * .25,// 75,
       margin: 1,
       borderWidth: 2,
       borderColor: color,
     }
   }
 
+  countDown() {
+      // setInterval( () => {
+      //   if (this.state.time > 0) {
+      //     this.setState( {time: this.state.time - 1})
+      //   }
+      //     }, 1000 )
+      //   }
+      setInterval( () => {
+        this.setState( {time: this.state.time - 1})
+      }, 1000 )
+  }
 
 
   render() {
@@ -83,6 +97,7 @@ export default class Board extends Component {
 
         <View style={boardStyles.scoreBoard}>
           <ScoreCard score={game.player.score}/>
+          <Timer time={this.state.time}/>
         </View>
 
         <Grid grid={game.grid} touchCard={this.touchCard} cardStyle={this.cardStyleFunc} />

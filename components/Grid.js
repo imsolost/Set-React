@@ -29,9 +29,11 @@ const gridStyle = StyleSheet.create({
     height: height*.7,
     width: width*.85,
     flexDirection: 'row',
+    alignItems: 'flex-end',
     justifyContent: 'space-around',
     flexWrap: 'wrap',
     flex: 1,
+    marginTop: height * .05,
     backgroundColor: 'rgba( 0,0,0,0)'
   },
 })
