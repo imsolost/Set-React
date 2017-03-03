@@ -14,7 +14,7 @@ export default class Player {
 
   removeCard( card ) {
     let newSelection = this.selectedCards.filter( selectedCard => {
-      return !( Player.cardsAreEqual(selectedCard.card, card.card) )
+      return !( Player.cardsAreEqual(selectedCard, card) )
     })
     this.selectedCards = newSelection
 
@@ -23,15 +23,11 @@ export default class Player {
   checkIfCardIsSelected( card ) {
     let currentSelection = this.selectedCards
     return currentSelection.reduce( ( acc, currentCard ) => {
-      if ( Player.cardsAreEqual( currentCard.card, card.card ) ) {
+      if ( Player.cardsAreEqual( currentCard, card ) ) {
         return acc = true
       }
       return acc
     }, false )
-  }
-
-  static cardsAreEqual( card1, card2 ) {
-    return _.isEqual( card1, card2 )
   }
 
   selectionIsEmpty() {
@@ -42,7 +38,11 @@ export default class Player {
     this.selectedCards = []
   }
 
-  updateScore() {
+  addScorePoint() {
+    this.score++
+  }
 
+  static cardsAreEqual( card1, card2 ) {
+    return _.isEqual( card1, card2 )
   }
 }

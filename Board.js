@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Button } from 'react-native'
 import Dimensions from 'Dimensions'
 import Game from './classes/Game'
 import Grid from './components/Grid'
+import ScoreCard from './components/ScoreCard'
 
 import _ from 'lodash'
 
@@ -17,6 +18,7 @@ export default class Board extends Component {
       game: game
     }
     this.touchCard = this.touchCard.bind( this )
+    this.startNewGame = this.startNewGame.bind( this )
   }
 
   touchCard( card ) {
@@ -25,21 +27,48 @@ export default class Board extends Component {
 
     if ( game.player.selectionIsEmpty() ) {
       game.player.addCard( card )
+      game.grid.toggleSelectOnCard( card )
+      this.setState({ game })
       return
     }
 
+
     if ( game.player.checkIfCardIsSelected( card ) ) {
       game.player.removeCard( card )
+      game.grid.toggleSelectOnCard( card )
     } else {
       game.player.addCard( card )
+      game.grid.toggleSelectOnCard( card )
     }
 
     if ( currentSelection.length === 3 ) {
       game.handleSet()
       game.player.clearSet()
+      game.deal()
+      game.grid.resetSelected()
     }
 
     this.setState({ game })
+  }
+
+  startNewGame() {
+    let game = this.state.game
+    game.setNewGame()
+    game.deal()
+    this.setState({ game })
+  }
+
+  cardStyleFunc( color ) {
+    return {
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 110,
+      width: 90,
+      margin: 3,
+      borderWidth: 1,
+      shadowColor: color,
+      shadowOpacity: 1
+    }
   }
 
 
@@ -50,13 +79,13 @@ export default class Board extends Component {
       <View style={boardStyles.board}>
 
         <View style={boardStyles.scoreBoard}>
-          <Text>SCORE</Text>
+          <ScoreCard score={game.player.score}/>
         </View>
 
-        <Grid grid={game.grid} touchCard={this.touchCard} />
+        <Grid grid={game.grid} touchCard={this.touchCard} cardStyle={this.cardStyleFunc} />
 
-        <View style={boardStyles.buttons}>
-          <Text>BUTTONS</Text>
+        <View style={boardStyles.buttonRack}>
+          <Button onPress={this.startNewGame} title="New Game" color="#841584"/>
         </View>
       </View>
     )
@@ -71,17 +100,14 @@ const boardStyles = StyleSheet.create({
     height: height*.85,
     width: width*.85,
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   scoreBoard: {
-    width: width*.75,
+    width: width*.85,
     height: 50,
-    borderWidth: 1,
-    borderColor: 'red'
+    borderWidth: 1
   },
-  buttons: {
-    borderWidth: 1,
-    borderColor: 'green',
+  buttonRack: {
     height: 50
   }
 })

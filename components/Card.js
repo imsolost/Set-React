@@ -1,49 +1,52 @@
 import React, { Component } from 'react'
 import {
-  AppRegistry,
   StyleSheet,
   Image,
   Text,
-  View,
-  TouchableHighlight
+  TouchableHighlight,
+  Switch,
+  View
 } from 'react-native'
 
 
 
 
 export default class Card extends Component {
+
   onPressButton() {
-    this.props.onTouch(this.props)
+    this.props.onTouch( this.props.card )
+  }
+
+  setCardStyle( color ) {
+    return this.props.cardStyle( color )
   }
 
 
   render() {
     let image = this.props.card !== null
-      ? <Image source={this.props.card.image} style={cardStyles.img}/>
-      : <Text> NULL </Text>
+    ? <Image source={this.props.card.image} style={ cardStyles.img } />
+    : <Text> NULL </Text>
+
+    let color = this.props.card.selected ? '#00008b' : '#FFFFFF'
+    let cardStyle = this.setCardStyle( color )
+
     return (
-      <TouchableHighlight style={cardStyles.card} onPress={this.onPressButton.bind( this )}>
-        { image }
+    <View style={ cardStyle }>
+      <TouchableHighlight style={ cardStyles.overlay } onPress={this.onPressButton.bind( this )} activeOpacity={1}  >
+          { image }
       </TouchableHighlight>
+    </View>
     )
   }
 }
+
 const cardStyles = StyleSheet.create({
-  card: {
-    height: 110,
-    width: 90,
-    margin: 3,
-    borderWidth: 1
-  },
   img: {
     flex: 1,
     resizeMode: 'contain',
     transform: [ {rotate: '90deg'} ]
-  }//0,
-  // card: {
-  //   width: width*.27,
-  //   height: height*.17,
-  //   borderWidth: 1,
-  //   marginBottom: 3
-  // }
+  },
+  overlay: {
+    flex: 1
+  }
 })

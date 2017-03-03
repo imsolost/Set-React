@@ -13,7 +13,7 @@ const { width, height } = Dimensions.get('window')
 export default class Grid extends Component {
     render() {
       const cards = this.props.grid.cardsInPlay
-        .map( (card, key) => <Card key={key} card={card} onTouch={this.props.touchCard} /> )
+        .map( (card, key) => <Card key={key} card={card} onTouch={this.props.touchCard} cardStyle={this.props.cardStyle }/> )
       return (
         <View style={gridStyle.gridBox}>
           {cards}
@@ -32,6 +32,7 @@ const gridStyle = StyleSheet.create({
     width: width*.85,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    flex: 1
   },
 })
