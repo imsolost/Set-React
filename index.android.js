@@ -17,7 +17,6 @@ import Board from './Board'
 export default class SetReact extends Component {
   render() {
     return (
-      <Image source={ require('./components/cards/background.png') } style={styles.backgroundImage} />
       <View style={styles.container}>
         <Board className="board"/>
       </View>
@@ -32,10 +31,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'stretch'
-  }
 });
 
 AppRegistry.registerComponent('SetReact', () => SetReact);

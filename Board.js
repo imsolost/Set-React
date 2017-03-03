@@ -5,8 +5,6 @@ import Game from './classes/Game'
 import Grid from './components/Grid'
 import ScoreCard from './components/ScoreCard'
 
-import _ from 'lodash'
-
 const game = new Game()
 game.deal()
 const { width, height } = Dimensions.get('window')

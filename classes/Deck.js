@@ -1,4 +1,3 @@
-import path from 'path'
 import _ from 'lodash'
 
 const filePath = '..Public'
