@@ -4,7 +4,7 @@ import Dimensions from 'Dimensions'
 
 export default ScoreCard = ( props ) => {
 
-  return <Text style={styles.score}>{props.score}</Text>
+  return <Text style={styles.score}>Score: {props.score}</Text>
 }
 
 const styles = StyleSheet.create({

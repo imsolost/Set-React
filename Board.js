@@ -15,41 +15,44 @@ export default class Board extends Component {
     super( props )
     this.state = {
       game: game,
-      time: 10
+      time: 10,
+      isOver: false
     }
     this.touchCard = this.touchCard.bind( this )
     this.startNewGame = this.startNewGame.bind( this )
-    this.countDown = this.countDown.bind( this )
-    //this.countDown()
+    this.gameOver = this.gameOver.bind(this)
   }
 
   touchCard( card ) {
-    let game = this.state.game
-    let currentSelection = game.player.selectedCards
+    if (!this.state.isOver) {
+      let game = this.state.game
+      let currentSelection = game.player.selectedCards
 
-    if ( game.player.selectionIsEmpty() ) {
-      game.player.addCard( card )
-      game.grid.toggleSelectOnCard( card )
+      if ( game.player.selectionIsEmpty() ) {
+        game.player.addCard( card )
+        game.grid.toggleSelectOnCard( card )
+        this.setState({ game })
+        return
+      }
+
+      if ( game.player.checkIfCardIsSelected( card ) ) {
+        game.player.removeCard( card )
+        game.grid.toggleSelectOnCard( card )
+      } else {
+        game.player.addCard( card )
+        game.grid.toggleSelectOnCard( card )
+      }
+
+      if ( currentSelection.length === 3 ) {
+        game.handleSet()
+        game.player.clearSet()
+        game.deal()
+        game.grid.resetSelected()
+      }
+
       this.setState({ game })
-      return
     }
 
-    if ( game.player.checkIfCardIsSelected( card ) ) {
-      game.player.removeCard( card )
-      game.grid.toggleSelectOnCard( card )
-    } else {
-      game.player.addCard( card )
-      game.grid.toggleSelectOnCard( card )
-    }
-
-    if ( currentSelection.length === 3 ) {
-      game.handleSet()
-      game.player.clearSet()
-      game.deal()
-      game.grid.resetSelected()
-    }
-
-    this.setState({ game })
   }
 
   startNewGame() {
@@ -77,16 +80,9 @@ export default class Board extends Component {
     }
   }
 
-  countDown() {
-      // setInterval( () => {
-      //   if (this.state.time > 0) {
-      //     this.setState( {time: this.state.time - 1})
-      //   }
-      //     }, 1000 )
-      //   }
-      setInterval( () => {
-        this.setState( {time: this.state.time - 1})
-      }, 1000 )
+  gameOver() {
+    this.setState( {isOver: true})
+    console.log(this.state.isOver);
   }
 
 
@@ -97,7 +93,7 @@ export default class Board extends Component {
 
         <View style={boardStyles.scoreBoard}>
           <ScoreCard score={game.player.score}/>
-          <Timer time={this.state.time}/>
+          <Timer time={this.state.time} gameOver={this.gameOver}/>
         </View>
 
         <Grid grid={game.grid} touchCard={this.touchCard} cardStyle={this.cardStyleFunc} />
@@ -121,8 +117,10 @@ const boardStyles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   scoreBoard: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     width: width*.85,
-    height: 25,
+    height: height*.05,
   },
   buttonRack: {
     flexDirection: 'row',

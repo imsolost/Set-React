@@ -1,18 +1,26 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
+
 export default class Timer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      time: 180
+      time: 10
     }
-    this.countDown()
+    this.doTime = this.doTime.bind(this)
+    this.doTime()
   }
-  countDown() {
-      setInterval( () => {
-        this.setState( {time: this.state.time - 1})
-      }, 1000 )
+
+  doTime() {
+    this.setState( {time: this.state.time - 1})
+
+    if (this.state.time > 0) {
+      setTimeout(this.doTime, 1000)
+    }
+    else {
+      this.props.gameOver()
+    }
   }
 
   render() {
@@ -22,8 +30,8 @@ export default class Timer extends Component {
 }
 
 const styles = StyleSheet.create({
-  score: {
-    color: 'red',
+  time: {
+    color: 'black',
     fontSize: 22,
     alignSelf: 'center',
   }
