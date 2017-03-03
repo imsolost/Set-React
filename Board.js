@@ -15,7 +15,7 @@ export default class Board extends Component {
     super( props )
     this.state = {
       game: game,
-      time: 10,
+      time: 180,
       isOver: false
     }
     this.touchCard = this.touchCard.bind( this )
@@ -55,11 +55,12 @@ export default class Board extends Component {
 
   }
 
-  startNewGame() {
+  startNewGame( timer ) {
     let game = this.state.game
     game.setNewGame()
     game.deal()
     this.setState({ game })
+    this._child.resetTime()
   }
 
   handleReDeal() {
@@ -93,7 +94,7 @@ export default class Board extends Component {
 
         <View style={boardStyles.scoreBoard}>
           <ScoreCard score={game.player.score}/>
-          <Timer time={this.state.time} gameOver={this.gameOver}/>
+          <Timer ref={(child) => { this._child = child }} time={this.state.time} gameOver={this.gameOver}/>
         </View>
 
         <Grid grid={game.grid} touchCard={this.touchCard} cardStyle={this.cardStyleFunc} />

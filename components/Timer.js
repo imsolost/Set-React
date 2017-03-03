@@ -6,9 +6,10 @@ export default class Timer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      time: 10
+      time: this.props.time
     }
     this.doTime = this.doTime.bind(this)
+    this.resetTime = this.resetTime.bind(this)
     this.doTime()
   }
 
@@ -21,6 +22,10 @@ export default class Timer extends Component {
     else {
       this.props.gameOver()
     }
+  }
+
+  resetTime() {
+    this.setState({ time: 180 })
   }
 
   render() {
