@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { AppRegistry, StyleSheet, Text, View } from 'react-native'
 import Dimensions from 'Dimensions'
 import Game from './classes/Game'
 import Grid from './components/Grid'
+
+import _ from 'lodash'
 
 const game = new Game()
 game.deal()
@@ -19,9 +16,36 @@ export default class Board extends Component {
     this.state = {
       game: game
     }
+    this.touchCard = this.touchCard.bind( this )
   }
 
+  touchCard( card ) {
+    let game = this.state.game
+    let currentSelection = game.player.selectedCards
+
+    if ( game.player.selectionIsEmpty() ) {
+      game.player.addCard( card )
+      return
+    }
+
+    if ( game.player.checkIfCardIsSelected( card ) ) {
+      game.player.removeCard( card )
+    } else {
+      game.player.addCard( card )
+    }
+
+    if ( currentSelection.length === 3 ) {
+      game.handleSet()
+      game.player.clearSet()
+    }
+
+    this.setState({ game })
+  }
+
+
+
   render() {
+    let game = this.state.game
     return (
       <View style={boardStyles.board}>
 
@@ -29,7 +53,7 @@ export default class Board extends Component {
           <Text>SCORE</Text>
         </View>
 
-        <Grid grid={this.state.game.grid}/>
+        <Grid grid={game.grid} touchCard={this.touchCard} />
 
         <View style={boardStyles.buttons}>
           <Text>BUTTONS</Text>
@@ -47,18 +71,7 @@ const boardStyles = StyleSheet.create({
     height: height*.85,
     width: width*.85,
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  gridBox: {
-    borderWidth: 1,
-    borderColor: 'blue',
-    height: height*.7,
-    width: width*.85,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexWrap: 'wrap'
+    justifyContent: 'space-between'
   },
   scoreBoard: {
     width: width*.75,
@@ -70,11 +83,5 @@ const boardStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'green',
     height: 50
-  },
-  card: {
-    width: width*.27,
-    height: height*.17,
-    borderWidth: 1,
-    marginBottom: 3
   }
 })

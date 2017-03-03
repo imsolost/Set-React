@@ -17,9 +17,7 @@ export default class SetReact extends Component {
   render() {
     return (
       <View style={styles.container}>
-
         <Board className="board"/>
-
       </View>
     );
   }
@@ -31,21 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#5f9ea0',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  board: {
-    color: 'red'
   }
-
 });
 
 AppRegistry.registerComponent('SetReact', () => SetReact);

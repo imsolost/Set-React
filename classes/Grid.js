@@ -9,6 +9,7 @@ export default class Grid {
       if ( card === null ) {
         return deck.cards.pop()
       }
+      return card
     })
     this.cardsInPlay = cardsInPlay
     return deck
