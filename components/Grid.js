@@ -26,13 +26,14 @@ export default class Grid extends Component {
 
 const gridStyle = StyleSheet.create({
   gridBox: {
-    borderWidth: 1,
-    borderColor: 'blue',
     height: height*.7,
     width: width*.85,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    justifyContent: 'space-around',
     flexWrap: 'wrap',
-    flex: 1
+    flex: 1,
+    marginTop: height * .05,
+    backgroundColor: 'rgba( 0,0,0,0)'
   },
 })
