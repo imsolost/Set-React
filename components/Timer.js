@@ -10,22 +10,27 @@ export default class Timer extends Component {
     }
     this.doTime = this.doTime.bind(this)
     this.resetTime = this.resetTime.bind(this)
+  }
+
+  componentDidMount() {
     this.doTime()
   }
 
   doTime() {
-    this.setState( {time: this.state.time - 1})
 
     if (this.state.time > 0) {
       setTimeout(this.doTime, 1000)
+      this.setState( {time: this.state.time - 1})
     }
     else {
       this.props.gameOver()
     }
+
   }
 
   resetTime() {
     this.setState({ time: 180 })
+    setTimeout(this.doTime, 1000)
   }
 
   render() {

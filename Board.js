@@ -15,7 +15,7 @@ export default class Board extends Component {
     super( props )
     this.state = {
       game: game,
-      time: 180,
+      time: 10,
       isOver: false
     }
     this.touchCard = this.touchCard.bind( this )
@@ -59,7 +59,7 @@ export default class Board extends Component {
     let game = this.state.game
     game.setNewGame()
     game.deal()
-    this.setState({ game })
+    this.setState({ game: game, isOver: false})
     this._child.resetTime()
   }
 
