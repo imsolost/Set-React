@@ -5,6 +5,7 @@ import Game from './classes/Game'
 import Grid from './components/Grid'
 import ScoreCard from './components/ScoreCard'
 import Timer from './components/Timer'
+import Popup from 'react-native-popup'
 
 const game = new Game()
 game.deal()
@@ -55,7 +56,7 @@ export default class Board extends Component {
 
   }
 
-  startNewGame( timer ) {
+  startNewGame() {
     let game = this.state.game
     game.setNewGame()
     game.deal()
@@ -84,7 +85,16 @@ export default class Board extends Component {
   gameOver() {
     this.setState( {isOver: true})
     console.log(this.state.isOver);
+    this._popup.confirm({
+      content: 'Your score brings great dishonor to your family. Would you like to play again?',
+      ok: {
+        callback: () => {
+          this.startNewGame()
+        },
+      },
+    });
   }
+
 
 
   render() {
@@ -94,7 +104,7 @@ export default class Board extends Component {
 
         <View style={boardStyles.scoreBoard}>
           <ScoreCard score={game.player.score}/>
-          <Timer ref={(child) => { this._child = child }} time={this.state.time} gameOver={this.gameOver}/>
+          <Timer ref={child => { this._child = child }} time={this.state.time} gameOver={this.gameOver}/>
         </View>
 
         <Grid grid={game.grid} touchCard={this.touchCard} cardStyle={this.cardStyleFunc} />
@@ -103,6 +113,7 @@ export default class Board extends Component {
           <Button onPress={this.startNewGame} title="New Game" color="#841584"/>
           <Button onPress={this.handleReDeal.bind( this )} title="redeal" color="#841584"/>
         </View>
+        <Popup ref={popup => this._popup = popup }/>
       </View>
     )
   }

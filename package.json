@@ -11,6 +11,7 @@
     "lodash": "^4.17.4",
     "react": "~15.4.0",
     "react-native": "0.41.2",
+    "react-native-popup": "^0.6.1",
     "react-native-toggle": "^1.0.3",
     "react-native-viewport-units": "0.0.5"
   },
