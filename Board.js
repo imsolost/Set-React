@@ -29,7 +29,7 @@ export default class Board extends Component {
   }
 
   startGamePopUp() {
-    this._popupEndGame.confirm({
+    this._popupStartGame.confirm({
       content: "There are four traits, make a set of three cards with each trait either matching on all three, or each card has different version of the trait.",
       ok: {
         callback: () => {
@@ -99,15 +99,14 @@ export default class Board extends Component {
 
   gameOver() {
     this.setState( {isOver: true})
-    console.log(this.state.isOver);
-    this._popupEndGame.confirm({
-      content: "Your name must be Josh, because you're a clown.",
-      ok: {
-        callback: () => {
-          this.startNewGame()
-        },
-      },
-    });
+    // this._popupEndGame.confirm({
+    //   content: "Your name must be Josh, because you're a clown.",
+    //   ok: {
+    //     callback: () => {
+    //       this.startNewGame()
+    //     },
+    //   },
+    // })
   }
 
 
@@ -128,8 +127,8 @@ export default class Board extends Component {
           <Button onPress={this.startNewGame} title="New Game" color="#841584"/>
           <Button onPress={this.handleReDeal.bind( this )} title="redeal" color="#841584"/>
         </View>
-        <Popup ref={ popupStartGame => this._popupStartGame = popupStartGame }/>
         <Popup ref={ popupEndGame => this._popupEndGame = popupEndGame }/>
+        <Popup ref={ popupStartGame => this._popupStartGame = popupStartGame }/>
       </View>
     )
   }
