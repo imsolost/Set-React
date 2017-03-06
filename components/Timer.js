@@ -28,9 +28,15 @@ export default class Timer extends Component {
 
   }
 
+  startTimer() {
+    this.
+  }
+
   resetTime() {
-    this.setState({ time: 180 })
-    setTimeout(this.doTime, 1000)
+    if ( this.state.time <= 0 ) {
+      setTimeout(this.doTime, 1000)
+    }
+    this.setState({ time: 240 })
   }
 
   render() {
